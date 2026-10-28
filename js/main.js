@@ -1,12 +1,10 @@
-
-/**
- * SATYA ROHITH — PORTFOLIO MAIN SCRIPT
- * Navigation, scroll effects, filters, modal, contact form,
- * and interactive mouse/scroll background animation.
- */
-
 (function () {
   'use strict';
+
+  if (window.__portfolioMainInitialized) {
+    return;
+  }
+  window.__portfolioMainInitialized = true;
 
   // =========================================================
   // 1. SCROLL PROGRESS, HEADER & BACK TO TOP
@@ -54,22 +52,26 @@
   const bgVideo = document.getElementById('site-bg-video');
 
   if (bgVideo) {
-    const playPromise = bgVideo.play();
+    const startVideoPlayback = () => {
+      if (!bgVideo || typeof bgVideo.play !== 'function') return;
 
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        const startVideo = () => {
-          bgVideo.play().catch(() => {});
-          window.removeEventListener('click', startVideo);
-          window.removeEventListener('touchstart', startVideo);
-          window.removeEventListener('scroll', startVideo);
-        };
+      bgVideo.muted = true;
+      bgVideo.playsInline = true;
+      bgVideo.play().catch(() => {});
+    };
 
-        window.addEventListener('click', startVideo, { passive: true });
-        window.addEventListener('touchstart', startVideo, { passive: true });
-        window.addEventListener('scroll', startVideo, { passive: true });
-      });
-    }
+    const unlockVideoPlayback = () => {
+      startVideoPlayback();
+      window.removeEventListener('click', unlockVideoPlayback);
+      window.removeEventListener('touchstart', unlockVideoPlayback);
+      window.removeEventListener('scroll', unlockVideoPlayback);
+    };
+
+    bgVideo.play().catch(() => {
+      window.addEventListener('click', unlockVideoPlayback, { passive: true });
+      window.addEventListener('touchstart', unlockVideoPlayback, { passive: true });
+      window.addEventListener('scroll', unlockVideoPlayback, { passive: true });
+    });
 
     let videoTicking = false;
 
@@ -79,9 +81,7 @@
       videoTicking = true;
 
       requestAnimationFrame(() => {
-        bgVideo.style.transform =
-          `translate3d(0, ${(window.scrollY || 0) * 0.05}px, 0)`;
-
+        bgVideo.style.transform = `translate3d(0, ${(window.scrollY || 0) * 0.05}px, 0)`;
         videoTicking = false;
       });
     }, { passive: true });
@@ -97,9 +97,7 @@
     const ctx = canvas.getContext('2d');
 
     if (ctx) {
-      const reducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      );
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
       const mouse = {
         x: -1000,
@@ -582,6 +580,4 @@
       });
     });
   });
-
 })();
-
