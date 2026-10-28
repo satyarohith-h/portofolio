@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Satya Rohith — AI-Powered Builder &amp; Developer | Cinematic Portfolio</title>
+  
+  <meta name="description" content="Official portfolio of Satya Rohith — AI-Powered Builder & Developer. Building web experiences and practical digital products while exploring artificial intelligence and machine learning.">
+  <meta name="keywords" content="Satya Rohith, Web Developer, AI, Machine Learning, Python, Flask, Frontend, JavaScript, MediFlow, Portfolio">
+  <meta name="author" content="Satya Rohith">
+  <meta name="theme-color" content="#060608">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Satya Rohith — AI-Powered Builder &amp; Developer">
+  <meta property="og:description" content="Cinematic scroll-animated portfolio showcasing web applications, MediFlow, and AI/ML exploration.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/satya-portrait-1.jpg">
+
+  <!-- Favicon Monogram SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2308090e'/><text x='50' y='64' font-family='sans-serif' font-size='42' font-weight='900' fill='%23ff2a5f' text-anchor='middle'>SR.</text></svg>">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Scroll Progress Indicator -->
+  <div id="scroll-progress-bar" aria-hidden="true"></div>
+
+  <!-- Whole-Site Interactive Background Layer (Fixed across entire portfolio, moves with scroll) -->
+  <div class="site-bg-canvas-wrap" aria-hidden="true">
+    <canvas id="site-bg-canvas"></canvas>
+    <video id="site-bg-video" class="site-bg-video" muted playsinline preload="auto" poster="assets/satya-portrait-1.jpg">
+      <source src="assets/hero-video.mp4" type="video/mp4">
+    </video>
+    <img src="assets/satya-portrait-1.jpg" alt="Satya Rohith portrait with cinematic lighting" class="site-bg-fallback" id="site-bg-fallback">
+    <div class="site-bg-overlay"></div>
+  </div>
+
+  <!-- Sticky Top Navigation Bar -->
+  <header class="site-header" id="site-header">
+    <div class="nav-container">
+      <!-- Monogram Brand Mark -->
+      <a href="#home" class="brand-monogram" aria-label="Satya Rohith Home">
+        <span class="monogram-badge">SR<span class="monogram-dot">.</span></span>
+        <span class="brand-text">Satya Rohith</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-links-wrap" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#participation" class="nav-link">Participation</a></li>
+          <li><a href="#certificates" class="nav-link">Certificates</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Desktop CTA -->
+      <a href="#contact" class="nav-cta">
+        <span>Let's Connect</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation">
+    <ul class="mobile-nav-links">
+      <li><a href="#home" class="mobile-nav-link">Home</a></li>
+      <li><a href="#about" class="mobile-nav-link">About Me</a></li>
+      <li><a href="#skills" class="mobile-nav-link">Technical Skills</a></li>
+      <li><a href="#experience" class="mobile-nav-link">MediFlow Experience</a></li>
+      <li><a href="#participation" class="mobile-nav-link">Participation</a></li>
+      <li><a href="#certificates" class="mobile-nav-link">Certificates</a></li>
+      <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+      <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+    </ul>
+    <div class="mobile-drawer-footer">
+      <a href="#contact" class="btn-primary" style="font-size: 0.9rem; padding: 0.65rem 1.5rem;">Get in Touch</a>
+    </div>
+  </div>
+
+  <main id="main-content">
+    
+    <!-- =========================================================================
+         SECTION 1: HERO — CINEMATIC SCROLL-DRIVEN FRAME ANIMATION
+         Controlled by user scroll depth (350vh track).
+         Reversible, smooth LERP interpolation, high-DPI canvas.
+         ========================================================================= -->
+    <section class="hero-section" id="home" aria-label="Cinematic Introduction">
+      
+      <!-- Interactive Hero HUD Content -->
+      <div class="hero-hud">
+        
+        <!-- Top HUD Elements -->
+        <div class="hero-hud-top">
+          <div class="hud-badge">
+            <span class="hud-pulse"></span>
+            <span>AI-POWERED DEVELOPER</span>
+          </div>
+          <div class="hud-frame-counter">
+            PORTFOLIO 2026
+          </div>
+        </div>
+
+          <!-- Center Stage Typography & Actions -->
+          <div class="hero-hud-center">
+            
+            <div class="hero-greeting">
+              <span>Satya Rohith</span>
+            </div>
+
+            <h1 class="hero-title">
+              Hi, I'm <span class="name-highlight">Satya Rohith</span>
+            </h1>
+
+            <h2 class="hero-subtitle">
+              <span class="tag-ai">AI-Powered</span> Builder &amp; Developer
+            </h2>
+
+            <p class="hero-description">
+              “I build web experiences and practical digital products while exploring artificial intelligence and machine learning.”
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="hero-cta-group">
+              <a href="#projects" class="btn-primary" id="btn-hero-projects">
+                <span>View Projects</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="#contact" class="btn-secondary" id="btn-hero-contact">
+                <span>Contact Me</span>
+              </a>
+            </div>
+
+            <!-- Quick Direct Contact Pills -->
+            <div class="hero-quick-channels" aria-label="Quick Contact Channels">
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/satya_____rohith/" target="_blank" rel="noopener noreferrer" class="channel-pill" title="Follow Satya on Instagram">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                <span>@satya_____rohith</span>
+              </a>
+
+              <!-- WhatsApp -->
+              <a href="https://wa.me/918142279161?text=Hi%20Satya,%20saw%20your%20portfolio!" target="_blank" rel="noopener noreferrer" class="channel-pill" title="WhatsApp Chat">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.12.553 4.11 1.522 5.836l-1.616 5.908 6.079-1.595c1.674.912 3.593 1.433 5.632 1.433 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>WhatsApp</span>
+              </a>
+
+              <!-- Phone -->
+              <a href="tel:+918142279161" class="channel-pill" title="Call Satya">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1zM19 12h2c0-4.97-4.03-9-9-9v2c3.87 0 7 3.13 7 7zm-4 0h2c0-2.76-2.24-5-5-5v2c1.66 0 3 1.34 3 3z"/>
+                </svg>
+                <span>8142279161</span>
+              </a>
+
+              <!-- Email -->
+              <a href="mailto:satyarohith2005@gmail.com" class="channel-pill" title="Send Email">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span>Email Satya</span>
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Bottom HUD: Animated Scroll Indicator -->
+          <div class="hero-hud-bottom">
+            <a href="#about" class="scroll-indicator-wrap" aria-label="Explore Portfolio">
+              <div class="scroll-mouse-icon">
+                <div class="scroll-wheel"></div>
+              </div>
+              <span>Explore Portfolio</span>
+            </a>
+          </div>
+
+        </div>
+
+    </section>
+
+    <!-- Content Wrapper (Smooth transition from hero) -->
+    <div class="content-wrapper">
+
+      <!-- =========================================================================
+           SECTION 2: ABOUT ME
+           Professional introduction with exact truthful copy and authentic photo.
+           ========================================================================= -->
+      <section class="section-container" id="about" aria-labelledby="about-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 01. About Me</span>
+          <h2 class="section-title" id="about-heading">Crafting Code With Passion &amp; Curiosity</h2>
+          <p class="section-subtitle">A developer committed to practical solutions, continuous learning, and exploring intelligent systems.</p>
+        </div>
+
+        <div class="about-grid">
+          
+          <!-- Authentic Visual Showcase Card with Satya's Uploaded Portrait -->
+          <div class="about-visual-card reveal-item reveal-from-left delay-1">
+            <div class="about-photo-wrapper">
+              <img src="assets/satya-about-me.jpg" alt="Satya Rohith — AI-Powered Builder & Developer" class="about-photo" loading="lazy">
+              <div class="about-photo-overlay">
+                <div class="about-badge-status">
+                  <span class="status-dot"></span>
+                  <span>Available for Projects &amp; AI Builds</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- About Narrative -->
+          <div class="about-content reveal-item reveal-from-right delay-2">
+            
+            <p class="about-lead-copy">
+              “I'm Satya Rohith, a developer interested in web development, artificial intelligence, and machine learning. I enjoy building practical applications, solving problems, learning new technologies, and collaborating on projects that turn ideas into useful digital products.”
+            </p>
+
+            <div class="about-highlights-grid">
+              
+              <div class="about-pill-card reveal-item delay-1">
+                <div class="pill-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+                <div class="pill-info">
+                  <h4>Web Engineering</h4>
+                  <p>Building clean, responsive interfaces with modern HTML, CSS, JavaScript, and Flask.</p>
+                </div>
+              </div>
+
+              <div class="about-pill-card reveal-item delay-2">
+                <div class="pill-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                </div>
+                <div class="pill-info">
+                  <h4>AI &amp; ML Exploration</h4>
+                  <p>Exploring machine learning models, intelligent workflow automation, and data logic.</p>
+                </div>
+              </div>
+
+              <div class="about-pill-card reveal-item delay-3">
+                <div class="pill-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                </div>
+                <div class="pill-info">
+                  <h4>Product Mindset</h4>
+                  <p>Translating conceptual ideas into working software architecture that serves real users.</p>
+                </div>
+              </div>
+
+              <div class="about-pill-card reveal-item delay-4">
+                <div class="pill-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <div class="pill-info">
+                  <h4>Collaborative Builder</h4>
+                  <p>Proven team contributor across hackathons, codeathons, and shared development projects.</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+              <a href="#skills" class="btn-primary" style="font-size: 0.88rem; padding: 0.65rem 1.4rem;">
+                Explore Technical Stack
+              </a>
+              <a href="#contact" class="btn-secondary" style="font-size: 0.88rem; padding: 0.65rem 1.4rem;">
+                Get in Touch
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- =========================================================================
+           SECTION 3: TECHNICAL SKILLS
+           Clean interactive grid categorized exactly per user guidelines.
+           ========================================================================= -->
+      <section class="section-container" id="skills" aria-labelledby="skills-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 02. Technical Skills</span>
+          <h2 class="section-title" id="skills-heading">Technologies &amp; Domain Tooling</h2>
+          <p class="section-subtitle">Real technologies I actively write code in, along with tools and areas of ongoing exploration.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="skills-tabs reveal-item delay-1">
+          <button class="skill-tab-btn active" data-filter="all">All Skills</button>
+          <button class="skill-tab-btn" data-filter="web">Web Development</button>
+          <button class="skill-tab-btn" data-filter="prog">Programming &amp; Tools</button>
+          <button class="skill-tab-btn" data-filter="data">Databases &amp; AI</button>
+        </div>
+
+        <div class="skills-grid">
+          
+          <!-- Python -->
+          <div class="skill-card reveal-item" data-category="prog">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.9 2c-3.7 0-6.4.8-6.4 3.7v2.8h6.5v.9H3.7C1.6 9.4 0 11.2 0 13.6c0 2.5 1.8 4.2 4.1 4.2h2.4v-3.3c0-2.4 2-4.4 4.4-4.4h6.5V7.7c0-2.9-2.7-3.7-6.4-3.7h.9zm-2.8 1.9c.6 0 1.1.5 1.1 1.1 0 .6-.5 1.1-1.1 1.1-.6 0-1.1-.5-1.1-1.1 0-.6.5-1.1 1.1-1.1zM12.1 22c3.7 0 6.4-.8 6.4-3.7v-2.8H12v-.9h8.3c2.1 0 3.7-1.8 3.7-4.2 0-2.5-1.8-4.2-4.1-4.2h-2.4v3.3c0 2.4-2 4.4-4.4 4.4H6.6v2.4c0 2.9 2.7 3.7 6.4 3.7h-.9zm2.8-1.9c-.6 0-1.1-.5-1.1-1.1 0-.6.5-1.1 1.1-1.1.6 0 1.1.5 1.1 1.1 0 .6-.5 1.1-1.1 1.1z"/>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Core Language</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Programming</span>
+              <h3>Python</h3>
+            </div>
+            <p class="skill-desc">Object-oriented programming, data structures, backend scripting, automation, and AI foundation.</p>
+          </div>
+
+          <!-- HTML5 -->
+          <div class="skill-card reveal-item delay-1" data-category="web">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 2l1.6 18 7.4 2 7.4-2L21 2H3zm14.3 5.4h-9l.2 2.3h8.6l-.6 6.3-4.4 1.2-4.4-1.2-.3-3.4h2.2l.1 1.6 2.4.6 2.4-.6.3-2.7H6.2l-.7-6.6h12l-.2 2.5z"/>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Web Standard</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Web Development</span>
+              <h3>HTML</h3>
+            </div>
+            <p class="skill-desc">Semantic HTML5 structure, accessible markup, document hierarchy, and SEO best practices.</p>
+          </div>
+
+          <!-- CSS3 -->
+          <div class="skill-card reveal-item delay-2" data-category="web">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 2l1.6 18 7.4 2 7.4-2L21 2H3zm14.5 5.5l-.2 2.3H8.3l.2 2.3h8.3l-.7 7.4-4.1 1.1-4.1-1.1-.3-3.5h2.2l.1 1.7 2.1.6 2.1-.6.2-2.8H6.1L5.5 5.5h12z"/>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Styling &amp; Motion</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Web Development</span>
+              <h3>CSS</h3>
+            </div>
+            <p class="skill-desc">Modern responsive design, Flexbox, Grid, keyframe animations, glassmorphism, and custom tokens.</p>
+          </div>
+
+          <!-- JavaScript -->
+          <div class="skill-card reveal-item delay-3" data-category="web">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 3h18v18H3V3zm13.7 13.9c.7 0 1.3-.2 1.8-.7.4-.4.6-1 .6-1.7 0-1.8-1.5-2.2-3.1-2.6-1.1-.3-1.6-.7-1.6-1.4 0-.8.7-1.2 1.6-1.2.9 0 1.5.4 1.8 1.1l1.7-1c-.5-1.1-1.6-1.9-3.4-1.9-2 0-3.5 1.2-3.5 3 0 1.7 1.2 2.3 2.8 2.7 1.2.3 1.8.6 1.8 1.4 0 .8-.8 1.4-1.9 1.4-1.2 0-2-.6-2.4-1.6l-1.8.9c.6 1.6 1.9 2.6 4.1 2.6zm-6.9-.2V9.8H7.9v6.9c0 1.8 1 2.7 2.6 2.7.7 0 1.4-.2 1.9-.5l-.6-1.6c-.3.2-.7.3-1.1.3-.6 0-1-.3-1-.8z"/>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Client Logic</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Web Development</span>
+              <h3>JavaScript</h3>
+            </div>
+            <p class="skill-desc">ES6+ syntax, DOM manipulation, asynchronous programming, Canvas API, and interactive controls.</p>
+          </div>
+
+          <!-- Flask -->
+          <div class="skill-card reveal-item" data-category="web">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 3v4.5M15 3v4.5M6 8h12a2 2 0 0 1 2 2v2a8 8 0 0 1-16 0v-2a2 2 0 0 1 2-2zM9 13v3M15 13v3"/>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Backend Framework</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Web Development</span>
+              <h3>Flask</h3>
+            </div>
+            <p class="skill-desc">Lightweight Python web framework, application routing, REST endpoints, and template rendering.</p>
+          </div>
+
+          <!-- Visual Studio Code -->
+          <div class="skill-card reveal-item delay-1" data-category="prog">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.4 2.1L8.6 8.8l-4.5-3.4L2 6.5l3.8 3.5-3.8 3.5 2.1 1.1 4.5-3.4 8.8 6.7 4.6-2.2V4.3l-4.6-2.2zm0 4.8v10.2l-6.8-5.1 6.8-5.1z"/>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Primary IDE</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Tools</span>
+              <h3>Visual Studio Code</h3>
+            </div>
+            <p class="skill-desc">Primary coding environment, extension ecosystem, linting, debugging, and workspace setup.</p>
+          </div>
+
+          <!-- Git & GitHub -->
+          <div class="skill-card reveal-item delay-2" data-category="prog">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Version Control</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Tools</span>
+              <h3>Git &amp; GitHub</h3>
+            </div>
+            <p class="skill-desc">Distributed version control, repository management, commit workflows, and team collaboration.</p>
+          </div>
+
+          <!-- PostgreSQL (Currently Learning) -->
+          <div class="skill-card reveal-item delay-3" data-category="data">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 3c-4.97 0-9 1.79-9 4v10c0 2.21 4.03 4 9 4s9-1.79 9-4V7c0-2.21-4.03-4-9-4z"></path>
+                  <path d="M3 12c0 2.21 4.03 4 9 4s9-1.79 9-4"></path>
+                </svg>
+              </div>
+              <span class="skill-badge badge-learning">Currently Learning</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Databases</span>
+              <h3>PostgreSQL</h3>
+            </div>
+            <p class="skill-desc">Relational database concepts, SQL queries, table schemas, and data relationships.</p>
+          </div>
+
+          <!-- MySQL (Currently Learning) -->
+          <div class="skill-card reveal-item" data-category="data">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+              </div>
+              <span class="skill-badge badge-learning">Currently Learning</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Databases</span>
+              <h3>MySQL</h3>
+            </div>
+            <p class="skill-desc">Relational database management, data normalization, indexing, and basic query optimization.</p>
+          </div>
+
+          <!-- Artificial Intelligence -->
+          <div class="skill-card reveal-item delay-1" data-category="data">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                  <circle cx="12" cy="5" r="2"></circle>
+                  <path d="M12 7v4M8 15h.01M16 15h.01"></path>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Core Interest</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Core Interests</span>
+              <h3>Artificial Intelligence</h3>
+            </div>
+            <p class="skill-desc">Investigating generative models, prompt engineering, agentic systems, and practical AI tooling.</p>
+          </div>
+
+          <!-- Machine Learning -->
+          <div class="skill-card reveal-item delay-2" data-category="data">
+            <div class="skill-card-top">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </div>
+              <span class="skill-badge badge-core">Core Interest</span>
+            </div>
+            <div>
+              <span class="skill-category-label">Core Interests</span>
+              <h3>Machine Learning</h3>
+            </div>
+            <p class="skill-desc">Studying supervised learning, predictive modeling, data preprocessing, and algorithm intuition.</p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- =========================================================================
+           SECTION 4: SOFT SKILLS
+           Staggered cards for key professional & collaborative capabilities.
+           ========================================================================= -->
+      <section class="section-container" id="soft-skills" aria-labelledby="soft-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 03. Professional Strengths</span>
+          <h2 class="section-title" id="soft-heading">Soft Skills &amp; Collaboration</h2>
+          <p class="section-subtitle">Core interpersonal and mental frameworks applied throughout collaborative software development.</p>
+        </div>
+
+        <div class="soft-skills-grid">
+          
+          <div class="soft-skill-card reveal-item">
+            <div class="soft-skill-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z"></path>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z"></path>
+              </svg>
+            </div>
+            <h4>Logical Thinking</h4>
+            <p>Systematic deconstruction of complex conditions into clear, structured computational logic.</p>
+          </div>
+
+          <div class="soft-skill-card reveal-item delay-1">
+            <div class="soft-skill-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m4.93 4.93 4.24 4.24"></path>
+                <path d="m14.83 9.17 4.24-4.24"></path>
+                <path d="m14.83 14.83 4.24 4.24"></path>
+                <path d="m9.17 14.83-4.24 4.24"></path>
+                <circle cx="12" cy="12" r="4"></circle>
+              </svg>
+            </div>
+            <h4>Problem-Solving</h4>
+            <p>Tenacious debugging, isolating root causes, and implementing clean, reproducible fixes.</p>
+          </div>
+
+          <div class="soft-skill-card reveal-item delay-2">
+            <div class="soft-skill-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h4>Team Collaboration</h4>
+            <p>Active participation in hackathon teams, code alignment, and shared project ownership.</p>
+          </div>
+
+          <div class="soft-skill-card reveal-item delay-3">
+            <div class="soft-skill-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <h4>Communication</h4>
+            <p>Clear, transparent articulation of technical concepts, progress updates, and design intent.</p>
+          </div>
+
+          <div class="soft-skill-card reveal-item delay-4">
+            <div class="soft-skill-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+            </div>
+            <h4>Adaptability</h4>
+            <p>Quick onboarding onto new libraries, rapidly evolving project requirements, and agile workflows.</p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- =========================================================================
+           SECTION 5: PROJECT EXPERIENCE (MediFlow)
+           Prominent feature card for hospital queue management solution from NEXUS 2026.
+           ========================================================================= -->
+      <section class="section-container" id="experience" aria-labelledby="experience-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 04. Featured Project Experience</span>
+          <h2 class="section-title" id="experience-heading">MediFlow — Patient Flow &amp; Queue System</h2>
+          <p class="section-subtitle">Dynamic hospital queue management solution created during the NEXUS 2026 hackathon.</p>
+        </div>
+
+        <div class="mediflow-feature-card reveal-item">
+          
+          <div class="mediflow-header-banner">
+            <div class="mediflow-badge-group">
+              <span class="hackathon-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                NEXUS 2026 Hackathon
+              </span>
+              <span class="skill-badge badge-core">Healthcare Tech Solution</span>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">Collaborative Build</span>
+          </div>
+
+          <div class="mediflow-body-grid">
+            
+            <div class="mediflow-main-info">
+              <h3 class="mediflow-title">Dynamic Patient Flow &amp; Queue Management System</h3>
+              
+              <p class="mediflow-description">
+                “Collaborated on a web-based hospital queue management solution focused on organizing patient flow and supporting hospital staff workflows.”
+              </p>
+              <p class="mediflow-description" style="font-size: 0.95rem; color: var(--text-secondary);">
+                Participated in the <strong style="color: #ffffff;">NEXUS 2026 hackathon</strong>, designing and testing systems to prevent overcrowding in medical waiting areas through real-time triage sequencing.
+              </p>
+
+              <span class="key-areas-title">Key Areas Explored</span>
+
+              <div class="key-areas-grid">
+                
+                <div class="area-card">
+                  <span class="area-icon">🏥</span>
+                  <div>
+                    <h5>Patient Registration</h5>
+                    <p>Rapid demographic and priority-level intake during check-in.</p>
+                  </div>
+                </div>
+
+                <div class="area-card">
+                  <span class="area-icon">🎫</span>
+                  <div>
+                    <h5>Token Management</h5>
+                    <p>Automated digital token issuance with category assignment.</p>
+                  </div>
+                </div>
+
+                <div class="area-card">
+                  <span class="area-icon">⏱️</span>
+                  <div>
+                    <h5>Dynamic Queue Management</h5>
+                    <p>Real-time queue balancing across available doctor consultation rooms.</p>
+                  </div>
+                </div>
+
+                <div class="area-card">
+                  <span class="area-icon">📊</span>
+                  <div>
+                    <h5>Staff Dashboards</h5>
+                    <p>Clear status monitors enabling healthcare workers to track wait times.</p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="mediflow-actions" style="margin-top: 1rem;">
+                <button class="btn-primary" id="btn-open-mediflow-modal" style="font-size: 0.88rem; padding: 0.7rem 1.6rem;">
+                  <span>View Architecture Breakdown</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Simulated Interface Preview -->
+            <div class="mediflow-interactive-panel">
+              <div class="mediflow-ui-preview">
+                <div class="preview-topbar">
+                  <div class="preview-dots">
+                    <span class="preview-dot red"></span>
+                    <span class="preview-dot amber"></span>
+                    <span class="preview-dot green"></span>
+                  </div>
+                  <span class="preview-title">MediFlow Central Queue Monitor</span>
+                </div>
+
+                <div class="preview-queue-stream">
+                  <div class="queue-row">
+                    <div>
+                      <span class="token-id">#OPD-104</span>
+                      <span style="color: var(--text-muted); font-size: 0.75rem; margin-left: 0.5rem;">General Physician</span>
+                    </div>
+                    <span class="token-status active">In Consultation</span>
+                  </div>
+
+                  <div class="queue-row">
+                    <div>
+                      <span class="token-id">#OPD-105</span>
+                      <span style="color: var(--text-muted); font-size: 0.75rem; margin-left: 0.5rem;">Cardiology Check</span>
+                    </div>
+                    <span class="token-status waiting">Next in Line</span>
+                  </div>
+
+                  <div class="queue-row">
+                    <div>
+                      <span class="token-id">#OPD-106</span>
+                      <span style="color: var(--text-muted); font-size: 0.75rem; margin-left: 0.5rem;">Pediatric Triage</span>
+                    </div>
+                    <span class="token-status waiting">Waiting (Est: 8m)</span>
+                  </div>
+                </div>
+
+                <div style="background: rgba(255,42,95,0.06); border: 1px dashed rgba(255,42,95,0.25); border-radius: var(--radius-sm); padding: 0.85rem; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45;">
+                  ⚡ <strong>Dynamic Load Balancing:</strong> Automatically distributes incoming patient tokens to reduce average waiting overhead in hospital wards.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- =========================================================================
+           SECTION 6: PARTICIPATION AND ACHIEVEMENTS
+           STRICT RULE: Separate Card A (Codeathon) and Card B (Hackathon).
+           ========================================================================= -->
+      <section class="section-container" id="participation" aria-labelledby="participation-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 05. Events &amp; Engagements</span>
+          <h2 class="section-title" id="participation-heading">Participation &amp; Achievements</h2>
+          <p class="section-subtitle">Competitive coding trials and collaborative hackathon engagements.</p>
+        </div>
+
+        <div class="participation-grid">
+          
+          <!-- CARD A: Codeathon Participation -->
+          <div class="participation-card codeathon-card reveal-item">
+            <div class="participation-top">
+              <div class="participation-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <span class="participation-pill">Competitive Coding</span>
+            </div>
+
+            <div>
+              <span class="event-name">Algorithmic Challenge</span>
+              <h3>Codeathon Participation</h3>
+            </div>
+
+            <p>
+              Engaged in competitive codeathon challenges focusing on algorithmic efficiency, speed debugging, problem deconstruction, and rapid software implementation under competitive timed parameters.
+            </p>
+
+            <ul class="participation-meta-list">
+              <li>
+                <span class="meta-icon">✓</span>
+                <span>Focus: Data structures &amp; algorithmic logic</span>
+              </li>
+              <li>
+                <span class="meta-icon">✓</span>
+                <span>Rapid problem-solving in timed environments</span>
+              </li>
+              <li>
+                <span class="meta-icon">✓</span>
+                <span>Individual participation &amp; execution</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- CARD B: Hackathon Participation (NEXUS 2026) -->
+          <div class="participation-card hackathon-card reveal-item delay-1">
+            <div class="participation-top">
+              <div class="participation-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                  <path d="M4 22h16"></path>
+                  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                </svg>
+              </div>
+              <span class="participation-pill">Collaborative Hackathon</span>
+            </div>
+
+            <div>
+              <span class="event-name">NEXUS 2026</span>
+              <h3>Hackathon Participation</h3>
+            </div>
+
+            <p>
+              “Participated in the NEXUS 2026 hackathon and gained experience with collaborative problem-solving and teamwork.” Co-designed the MediFlow patient queue system under intense sprint deadlines.
+            </p>
+
+            <ul class="participation-meta-list">
+              <li>
+                <span class="meta-icon">✓</span>
+                <span>Event: NEXUS 2026 Hackathon</span>
+              </li>
+              <li>
+                <span class="meta-icon">✓</span>
+                <span>Outcome: MediFlow Queue Management System</span>
+              </li>
+              <li>
+                <span class="meta-icon">✓</span>
+                <span>Collaborative teamwork &amp; rapid prototyping</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- =========================================================================
+           SECTION 7: CERTIFICATES
+           Honest empty state per requirements — no fake credentials.
+           ========================================================================= -->
+      <section class="section-container" id="certificates" aria-labelledby="certificates-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 06. Verified Credentials</span>
+          <h2 class="section-title" id="certificates-heading">Certificates &amp; Achievements</h2>
+          <p class="section-subtitle">Dedicated repository for verified academic and technical certificates.</p>
+        </div>
+
+        <div class="certificates-empty-wrapper reveal-item">
+          <div class="empty-cert-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="6"></circle>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+            </svg>
+          </div>
+
+          <h3>Certificates Will Be Added Soon</h3>
+          <p>
+            Official certificates and verified credentials are currently being consolidated and will be published directly to this section as verified documents.
+          </p>
+
+          <div class="cert-slots-preview">
+            <span class="cert-slot-pill">📄 Python Programming Credential</span>
+            <span class="cert-slot-pill">🏆 NEXUS 2026 Hackathon Record</span>
+            <span class="cert-slot-pill">🌐 Web Development Fundamentals</span>
+          </div>
+        </div>
+
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- =========================================================================
+           SECTION 8: ADDITIONAL PROJECTS
+           Responsive card grid for real verified projects.
+           ========================================================================= -->
+      <section class="section-container" id="projects" aria-labelledby="projects-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 07. Selected Works</span>
+          <h2 class="section-title" id="projects-heading">Featured Projects</h2>
+          <p class="section-subtitle">Applications, web solutions, and problem-solving software.</p>
+        </div>
+
+        <div class="projects-grid">
+          
+          <!-- Project 1: MediFlow -->
+          <div class="project-card reveal-item">
+            <div class="project-thumb">
+              <div class="project-thumb-graphic">
+                <span style="font-size: 2.2rem; margin-bottom: 0.5rem;">🏥</span>
+                <span style="font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: #ffffff;">MediFlow</span>
+                <span style="font-size: 0.78rem; color: var(--accent-orange); font-family: var(--font-mono);">Queue &amp; Patient Stream</span>
+              </div>
+              <span class="project-badge-tag">NEXUS 2026</span>
+            </div>
+
+            <div class="project-content">
+              <h3 class="project-title">MediFlow</h3>
+              <p class="project-desc">
+                Hospital patient flow and queue management solution exploring token allocation, doctor triage counters, and real-time waiting load distribution.
+              </p>
+
+              <div class="project-tech-tags">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Queue Logic</span>
+              </div>
+
+              <div class="project-card-footer">
+                <a href="#experience" class="btn-link">
+                  <span>View Details</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Python Learning Platform -->
+          <div class="project-card reveal-item delay-1">
+            <div class="project-thumb">
+              <div class="project-thumb-graphic">
+                <span style="font-size: 2.2rem; margin-bottom: 0.5rem;">🐍</span>
+                <span style="font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: #ffffff;">PythonPath</span>
+                <span style="font-size: 0.78rem; color: var(--accent-red); font-family: var(--font-mono);">Interactive Code Lab</span>
+              </div>
+              <span class="project-badge-tag">Full-Stack Web</span>
+            </div>
+
+            <div class="project-content">
+              <h3 class="project-title">PythonPath Platform</h3>
+              <p class="project-desc">
+                Interactive learning environment featuring step-by-step modular Python tracks, interactive execution, exercise verification, and code syntax guidance.
+              </p>
+
+              <div class="project-tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">HTML/CSS</span>
+              </div>
+
+              <div class="project-card-footer">
+                <a href="#contact" class="btn-link">
+                  <span>Inquire Platform</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: AI Safety & Smoke Detection Concept -->
+          <div class="project-card reveal-item delay-2">
+            <div class="project-thumb">
+              <div class="project-thumb-graphic">
+                <span style="font-size: 2.2rem; margin-bottom: 0.5rem;">🔥</span>
+                <span style="font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: #ffffff;">Smart AI Alert</span>
+                <span style="font-size: 0.78rem; color: var(--accent-orange); font-family: var(--font-mono);">Vision &amp; Safety ML</span>
+              </div>
+              <span class="project-badge-tag">AI / ML Research</span>
+            </div>
+
+            <div class="project-content">
+              <h3 class="project-title">AI Smoke &amp; Fire Detection</h3>
+              <p class="project-desc">
+                Machine learning exploration for real-time hazard identification, processing visual input streams to detect early smoke patterns and trigger automated warnings.
+              </p>
+
+              <div class="project-tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Computer Vision</span>
+                <span class="tech-tag">Machine Learning</span>
+              </div>
+
+              <div class="project-card-footer">
+                <a href="#contact" class="btn-link">
+                  <span>Collaborate</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- =========================================================================
+           SECTION 9: CONTACT ME
+           Verified direct buttons (Instagram, Phone, WhatsApp, Email) + working form.
+           ========================================================================= -->
+      <section class="section-container" id="contact" aria-labelledby="contact-heading">
+        
+        <div class="section-header reveal-item">
+          <span class="section-tag">// 08. Let's Connect</span>
+          <h2 class="section-title" id="contact-heading">Get In Touch</h2>
+          <p class="section-subtitle">Reach out for project collaborations, software opportunities, or technical inquiries.</p>
+        </div>
+
+        <div class="contact-grid">
+          
+          <!-- Left: Direct Channels Panel -->
+          <div class="contact-info-panel reveal-item">
+            
+            <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.65;">
+              I am always excited to discuss web development projects, AI exploration, hackathon teamwork, or software ideas. Choose your preferred communication channel below:
+            </p>
+
+            <div class="contact-channels-list">
+              
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/satya_____rohith/" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
+                <div class="channel-icon-wrap">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </div>
+                <div class="channel-text">
+                  <span class="channel-label">Instagram Profile</span>
+                  <span class="channel-value">@satya_____rohith</span>
+                </div>
+              </a>
+
+              <!-- Phone Call -->
+              <a href="tel:+918142279161" class="contact-channel-item">
+                <div class="channel-icon-wrap">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/>
+                  </svg>
+                </div>
+                <div class="channel-text">
+                  <span class="channel-label">Direct Phone</span>
+                  <span class="channel-value">+91 8142279161</span>
+                </div>
+              </a>
+
+              <!-- WhatsApp -->
+              <a href="https://wa.me/918142279161?text=Hi%20Satya,%20saw%20your%20portfolio!" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
+                <div class="channel-icon-wrap">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.12.553 4.11 1.522 5.836l-1.616 5.908 6.079-1.595c1.674.912 3.593 1.433 5.632 1.433 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </div>
+                <div class="channel-text">
+                  <span class="channel-label">Instant Messaging</span>
+                  <span class="channel-value">Chat via WhatsApp</span>
+                </div>
+              </a>
+
+              <!-- Email -->
+              <a href="mailto:satyarohith2005@gmail.com" class="contact-channel-item">
+                <div class="channel-icon-wrap">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  </svg>
+                </div>
+                <div class="channel-text">
+                  <span class="channel-label">Email Address</span>
+                  <span class="channel-value">satyarohith2005@gmail.com</span>
+                </div>
+              </a>
+
+            </div>
+
+          </div>
+
+          <!-- Right: Interactive Form Panel -->
+          <div class="contact-form-panel reveal-item delay-1">
+            
+            <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">
+              Send a Direct Message
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+              Fill out this form and click submit to trigger a pre-formatted message directly to Satya.
+            </p>
+
+            <form id="portfolio-contact-form" class="contact-form" novalidate>
+              
+              <div id="form-status-alert" class="form-status-alert"></div>
+
+              <div class="form-group">
+                <label for="contact-name" class="form-label">Your Full Name *</label>
+                <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. Alex Morgan" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="form-label">Email Address *</label>
+                <input type="email" id="contact-email" name="email" class="form-input" placeholder="name@domain.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-subject" class="form-label">Subject</label>
+                <input type="text" id="contact-subject" name="subject" class="form-input" placeholder="Project Inquiry / Opportunity">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message" class="form-label">Your Message *</label>
+                <textarea id="contact-message" name="message" class="form-textarea" placeholder="Hello Satya, I would love to talk about..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary" style="justify-content: center; width: 100%; padding: 0.95rem;">
+                <span>Send Message via Mail Client</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+
+              <p class="form-note">
+                ℹ️ <em>Note: Since this is a static frontend deployment, submitting opens your local email client pre-populated with your message, ensuring reliable delivery without requiring a third-party server backend.</em>
+              </p>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#home" class="brand-monogram">
+            <span class="monogram-badge">SR<span class="monogram-dot">.</span></span>
+            <span style="font-size: 1.15rem; font-weight: 800;">Satya Rohith</span>
+          </a>
+          <p class="footer-tagline">AI-Powered Builder &amp; Developer</p>
+        </div>
+
+        <div class="footer-social-links">
+          <a href="https://www.instagram.com/satya_____rohith/" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+
+          <a href="https://wa.me/918142279161" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.12.553 4.11 1.522 5.836l-1.616 5.908 6.079-1.595c1.674.912 3.593 1.433 5.632 1.433 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+
+          <a href="tel:+918142279161" class="footer-social-icon" aria-label="Phone">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Satya Rohith. Crafted with cinematic scroll animation &amp; precision engineering.</p>
+        <p>Photographs &amp; Animation: Satya Rohith</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button class="back-to-top-btn" id="back-to-top" aria-label="Back to Top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- =========================================================================
+       MODAL: MediFlow Architecture & Flow Breakdown
+       ========================================================================= -->
+  <div class="modal-overlay" id="mediflow-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-window">
+      <button class="modal-close-btn" id="btn-close-modal" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <span class="section-tag" style="font-size: 0.75rem;">// NEXUS 2026 ARCHITECTURE</span>
+      <h3 class="modal-title" id="modal-title">MediFlow — System Architecture &amp; Workflow</h3>
+      
+      <div class="modal-content">
+        <p>
+          MediFlow was conceptualized and developed during the <strong style="color: #ffffff;">NEXUS 2026 hackathon</strong> to eliminate chaotic bottlenecks in hospital outpatient departments (OPDs) by replacing physical queues with intelligent digital triage tokens.
+        </p>
+
+        <div style="background: rgba(14,16,24,0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">
+          <h4 style="font-family: var(--font-display); color: var(--accent-orange); font-size: 1.05rem; margin-bottom: 0.6rem;">
+            Core Workflow Pipeline:
+          </h4>
+          <ol style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.92rem;">
+            <li><strong>Intake &amp; Registration:</strong> Receptionist or kiosk logs patient symptoms and category (e.g., General, Senior, Emergency).</li>
+            <li><strong>Token Generation:</strong> A unique prioritized token (e.g., <code>#OPD-104</code>) is generated with timestamped sequencing.</li>
+            <li><strong>Dynamic Load Balancer:</strong> The routing engine checks doctor consultation room availability and patient load.</li>
+            <li><strong>Live Waiting Room Monitor:</strong> Real-time display updates sound an alert when the patient's token is called to Counter 3.</li>
+            <li><strong>Consultation Handshake:</strong> Staff mark the session active, automatically advancing the next patient in sequence.</li>
+          </ol>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="tech-tag" style="background: rgba(255,42,95,0.15); color: #ffffff;">Web Frontend</span>
+          <span class="tech-tag" style="background: rgba(255,42,95,0.15); color: #ffffff;">State Machine</span>
+          <span class="tech-tag" style="background: rgba(255,42,95,0.15); color: #ffffff;">Hospital Operations</span>
+          <span class="tech-tag" style="background: rgba(255,42,95,0.15); color: #ffffff;">Triage Priority</span>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+          <a href="#contact" class="btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.4rem;" onclick="document.getElementById('mediflow-modal').classList.remove('open'); document.body.style.overflow='';">
+            Inquire About MediFlow
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/canvas-animation.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
