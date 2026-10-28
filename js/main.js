@@ -6,40 +6,52 @@
   const bgFallback = document.getElementById('site-bg-fallback');
 
   if (bgVideo) {
-    bgVideo.pause();
-    bgVideo.currentTime = 0;
     bgVideo.muted = true;
     bgVideo.setAttribute('playsinline', 'true');
-    bgVideo.style.display = 'none';
+    bgVideo.setAttribute('autoplay', 'autoplay');
+    bgVideo.style.objectPosition = 'center 32%';
 
     if (bgFallback) {
       bgFallback.style.display = 'block';
-      bgFallback.style.transform = 'translate3d(0, 0, 0) scale(1.04)';
+      bgFallback.style.objectPosition = 'center 32%';
     }
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let videoTicking = false;
 
-    function updateBackgroundParallax() {
+    function updateBackgroundFraming() {
+      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const scrollProgress = prefersReducedMotion ? 0 : Math.min(Math.max((window.scrollY || 0) / maxScroll, 0), 1);
+      const focalY = 32 + (scrollProgress * 18);
+
+      bgVideo.style.objectPosition = `center ${focalY}%`;
+
+      if (bgFallback) {
+        bgFallback.style.objectPosition = `center ${focalY}%`;
+      }
+    }
+
+    function scheduleBackgroundFraming() {
       if (videoTicking) return;
 
       videoTicking = true;
 
       requestAnimationFrame(() => {
-        const offset = (window.scrollY || 0) * 0.08;
-
-        if (bgFallback) {
-          bgFallback.style.transform = `translate3d(0, ${offset}px, 0) scale(1.04)`;
-        }
-
-        if (bgVideo) {
-          bgVideo.style.transform = `translate3d(0, ${offset}px, 0)`;
-        }
-
+        updateBackgroundFraming();
         videoTicking = false;
       });
     }
 
-    window.addEventListener('scroll', updateBackgroundParallax, { passive: true });
-    window.addEventListener('resize', updateBackgroundParallax, { passive: true });
-    updateBackgroundParallax();
+    bgVideo.play().catch(() => {
+      if (bgFallback) {
+        bgFallback.style.display = 'block';
+      }
+    });
+
+    if (!prefersReducedMotion) {
+      window.addEventListener('scroll', scheduleBackgroundFraming, { passive: true });
+      window.addEventListener('resize', scheduleBackgroundFraming, { passive: true });
+    }
+
+    scheduleBackgroundFraming();
   }
