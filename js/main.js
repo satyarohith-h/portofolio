@@ -1,283 +1,333 @@
-
-/**
- * SATYA ROHITH — PORTFOLIO MAIN SCRIPT
- * Navigation, scroll effects, filters, modal, contact form,
- * and interactive mouse/scroll background animation.
- */
-
 (function () {
   'use strict';
 
-  // =========================================================
-  // 1. SCROLL PROGRESS, HEADER & BACK TO TOP
-  // =========================================================
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const progressBar = document.getElementById('scroll-progress-bar');
-  const siteHeader = document.querySelector('.site-header');
-  const backToTopBtn = document.getElementById('back-to-top');
+  function initializeBackgroundEffects() {
+    const rootState = window.__portfolioBackgroundState || (window.__portfolioBackgroundState = {});
 
-  function updateScrollMetrics() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-
-    if (progressBar) progressBar.style.width = `${progress}%`;
-
-    if (siteHeader) {
-      siteHeader.classList.toggle('scrolled', scrollTop > 60);
+    if (rootState.effectsInitialized) {
+      return;
     }
+
+    rootState.effectsInitialized = true;
+
+    // =========================================================
+    // 1. SCROLL PROGRESS, HEADER & BACK TO TOP
+    // =========================================================
+
+    const progressBar = document.getElementById('scroll-progress-bar');
+    const siteHeader = document.querySelector('.site-header');
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    function updateScrollMetrics() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+      if (progressBar) progressBar.style.width = `${progress}%`;
+
+      if (siteHeader) {
+        siteHeader.classList.toggle('scrolled', scrollTop > 60);
+      }
+
+      if (backToTopBtn) {
+        backToTopBtn.classList.toggle('visible', scrollTop > 450);
+      }
+
+      document.documentElement.style.setProperty(
+        '--scroll-progress',
+        `${progress}%`
+      );
+    }
+
+    window.addEventListener('scroll', updateScrollMetrics, { passive: true });
+    window.addEventListener('resize', updateScrollMetrics, { passive: true });
+    updateScrollMetrics();
 
     if (backToTopBtn) {
-      backToTopBtn.classList.toggle('visible', scrollTop > 450);
-    }
-
-    document.documentElement.style.setProperty(
-      '--scroll-progress',
-      `${progress}%`
-    );
-  }
-
-  window.addEventListener('scroll', updateScrollMetrics, { passive: true });
-  window.addEventListener('resize', updateScrollMetrics);
-  updateScrollMetrics();
-
-  if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-  // =========================================================
-  // 2. BACKGROUND VIDEO AND PARALLAX
-  // =========================================================
-
-  const bgVideo = document.getElementById('site-bg-video');
-
-  if (bgVideo) {
-    const playPromise = bgVideo.play();
-
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        const startVideo = () => {
-          bgVideo.play().catch(() => {});
-          window.removeEventListener('click', startVideo);
-          window.removeEventListener('touchstart', startVideo);
-          window.removeEventListener('scroll', startVideo);
-        };
-
-        window.addEventListener('click', startVideo, { passive: true });
-        window.addEventListener('touchstart', startVideo, { passive: true });
-        window.addEventListener('scroll', startVideo, { passive: true });
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
 
-    let videoTicking = false;
+    // =========================================================
+    // 2. BACKGROUND VIDEO AND PARALLAX
+    // =========================================================
 
-    window.addEventListener('scroll', () => {
-      if (videoTicking) return;
+    const bgVideo = document.getElementById('site-bg-video');
+    const fallbackImg = document.getElementById('site-bg-fallback');
 
-      videoTicking = true;
+    if (bgVideo) {
+      bgVideo.muted = true;
+      bgVideo.loop = true;
+      bgVideo.playsInline = true;
+      bgVideo.setAttribute('playsinline', 'true');
+      bgVideo.setAttribute('webkit-playsinline', 'true');
+      bgVideo.style.display = 'block';
 
-      requestAnimationFrame(() => {
-        bgVideo.style.transform =
-          `translate3d(0, ${(window.scrollY || 0) * 0.05}px, 0)`;
-
-        videoTicking = false;
-      });
-    }, { passive: true });
-  }
-
-  // =========================================================
-  // 3. INTERACTIVE BACKGROUND: PARTICLES + MOUSE GLOW
-  // =========================================================
-
-  const canvas = document.getElementById('site-bg-canvas');
-
-  if (canvas && canvas.getContext) {
-    const ctx = canvas.getContext('2d');
-
-    if (ctx) {
-      const reducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      );
-
-      const mouse = {
-        x: -1000,
-        y: -1000,
-        active: false
+      const showFallback = () => {
+        if (fallbackImg) {
+          fallbackImg.classList.remove('fade-out');
+        }
       };
 
-      let width = 0;
-      let height = 0;
-      let particles = [];
-      let animationFrame = null;
-      let lastFrame = 0;
-      let scrollY = window.scrollY || 0;
+      const hideFallback = () => {
+        if (fallbackImg) {
+          fallbackImg.classList.add('fade-out');
+        }
+      };
 
-      const connectionDistance = 125;
-      const particleColor = '255, 75, 55';
+      const tryPlayVideo = () => {
+        if (!bgVideo || !bgVideo.play) return;
 
-      function resizeCanvas() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const playPromise = bgVideo.play();
 
-        width = window.innerWidth;
-        height = window.innerHeight;
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise
+            .then(() => {
+              bgVideo.style.display = 'block';
+              hideFallback();
+            })
+            .catch(() => {
+              showFallback();
 
-        canvas.width = Math.round(width * dpr);
-        canvas.height = Math.round(height * dpr);
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
+              const resumePlayback = () => {
+                bgVideo.play().catch(() => {});
+                window.removeEventListener('pointerdown', resumePlayback);
+                window.removeEventListener('touchstart', resumePlayback);
+                window.removeEventListener('keydown', resumePlayback);
+                window.removeEventListener('scroll', resumePlayback, { passive: true });
+              };
 
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+              window.addEventListener('pointerdown', resumePlayback, { passive: true });
+              window.addEventListener('touchstart', resumePlayback, { passive: true });
+              window.addEventListener('keydown', resumePlayback);
+              window.addEventListener('scroll', resumePlayback, { passive: true });
+            });
+        } else {
+          bgVideo.style.display = 'block';
+          hideFallback();
+        }
+      };
 
-        const particleCount = Math.min(
-          100,
-          Math.max(24, Math.floor((width * height) / 16000))
-        );
-
-        particles = Array.from({ length: particleCount }, () => ({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          radius: Math.random() * 1.7 + 0.6,
-          alpha: Math.random() * 0.45 + 0.2
-        }));
+      if (bgVideo.readyState >= 2) {
+        tryPlayVideo();
+      } else {
+        bgVideo.addEventListener('loadeddata', tryPlayVideo, { once: true });
       }
 
-      function drawMouseGlow() {
-        if (!mouse.active) return;
+      bgVideo.addEventListener('error', () => {
+        showFallback();
+      }, { once: true });
 
-        const gradient = ctx.createRadialGradient(
-          mouse.x, mouse.y, 0,
-          mouse.x, mouse.y, Math.min(width, height) * 0.28
-        );
+      let videoFrame = null;
+      const updateVideoParallax = () => {
+        if (!bgVideo) return;
 
-        gradient.addColorStop(0, 'rgba(255, 65, 45, 0.14)');
-        gradient.addColorStop(0.35, 'rgba(255, 45, 25, 0.055)');
-        gradient.addColorStop(1, 'rgba(255, 45, 25, 0)');
+        if (videoFrame !== null) return;
 
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, width, height);
-      }
+        videoFrame = requestAnimationFrame(() => {
+          const offset = (window.scrollY || 0) * 0.05;
+          bgVideo.style.transform = `translate3d(0, ${offset}px, 0)`;
+          videoFrame = null;
+        });
+      };
 
-      function drawParticles(time) {
-        const scrollOffset = (scrollY * 0.025) % (height || 1);
+      window.addEventListener('scroll', updateVideoParallax, { passive: true });
+    }
 
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
+    // =========================================================
+    // 3. INTERACTIVE BACKGROUND: PARTICLES + MOUSE GLOW
+    // =========================================================
 
-          if (!reducedMotion.matches) {
-            p.x += p.vx;
-            p.y += p.vy;
+    const canvas = document.getElementById('site-bg-canvas');
 
-            if (mouse.active) {
-              const dx = p.x - mouse.x;
-              const dy = p.y - mouse.y;
+    if (canvas && canvas.getContext) {
+      const ctx = canvas.getContext('2d');
+
+      if (ctx) {
+        const mouse = {
+          x: -1000,
+          y: -1000,
+          active: false
+        };
+
+        let width = 0;
+        let height = 0;
+        let particles = [];
+        let animationFrame = null;
+        let lastFrame = 0;
+        let scrollY = window.scrollY || 0;
+
+        const connectionDistance = 125;
+        const particleColor = '255, 75, 55';
+
+        function resizeCanvas() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          width = window.innerWidth;
+          height = window.innerHeight;
+
+          canvas.width = Math.round(width * dpr);
+          canvas.height = Math.round(height * dpr);
+          canvas.style.width = `${width}px`;
+          canvas.style.height = `${height}px`;
+
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+          const particleCount = Math.min(
+            100,
+            Math.max(24, Math.floor((width * height) / 16000))
+          );
+
+          particles = Array.from({ length: particleCount }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            radius: Math.random() * 1.7 + 0.6,
+            alpha: Math.random() * 0.45 + 0.2
+          }));
+        }
+
+        function drawMouseGlow() {
+          if (!mouse.active) return;
+
+          const gradient = ctx.createRadialGradient(
+            mouse.x, mouse.y, 0,
+            mouse.x, mouse.y, Math.min(width, height) * 0.28
+          );
+
+          gradient.addColorStop(0, 'rgba(255, 65, 45, 0.14)');
+          gradient.addColorStop(0.35, 'rgba(255, 45, 25, 0.055)');
+          gradient.addColorStop(1, 'rgba(255, 45, 25, 0)');
+
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, width, height);
+        }
+
+        function drawParticles() {
+          const scrollOffset = (scrollY * 0.025) % (height || 1);
+
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+
+            if (!reducedMotion.matches) {
+              p.x += p.vx;
+              p.y += p.vy;
+
+              if (mouse.active) {
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 115 && distance > 0) {
+                  const force = (115 - distance) / 115;
+                  p.x += (dx / distance) * force * 0.7;
+                  p.y += (dy / distance) * force * 0.7;
+                }
+              }
+
+              if (p.x < -5) p.x = width + 5;
+              if (p.x > width + 5) p.x = -5;
+              if (p.y < -5) p.y = height + 5;
+              if (p.y > height + 5) p.y = -5;
+            }
+
+            const drawY = (p.y - scrollOffset + height) % height;
+
+            ctx.beginPath();
+            ctx.arc(p.x, drawY, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${particleColor}, ${p.alpha})`;
+            ctx.fill();
+
+            for (let j = i + 1; j < particles.length; j++) {
+              const other = particles[j];
+              const otherY = (other.y - scrollOffset + height) % height;
+              const dx = p.x - other.x;
+              const dy = drawY - otherY;
               const distance = Math.sqrt(dx * dx + dy * dy);
 
-              if (distance < 115 && distance > 0) {
-                const force = (115 - distance) / 115;
-                p.x += (dx / distance) * force * 0.7;
-                p.y += (dy / distance) * force * 0.7;
+              if (distance < connectionDistance) {
+                const opacity = (1 - distance / connectionDistance) * 0.16;
+
+                ctx.beginPath();
+                ctx.moveTo(p.x, drawY);
+                ctx.lineTo(other.x, otherY);
+                ctx.strokeStyle = `rgba(${particleColor}, ${opacity})`;
+                ctx.lineWidth = 0.7;
+                ctx.stroke();
               }
             }
-
-            if (p.x < -5) p.x = width + 5;
-            if (p.x > width + 5) p.x = -5;
-            if (p.y < -5) p.y = height + 5;
-            if (p.y > height + 5) p.y = -5;
-          }
-
-          const drawY = (p.y - scrollOffset + height) % height;
-
-          ctx.beginPath();
-          ctx.arc(p.x, drawY, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${particleColor}, ${p.alpha})`;
-          ctx.fill();
-
-          // Connect nearby particles with delicate crimson lines.
-          for (let j = i + 1; j < particles.length; j++) {
-            const other = particles[j];
-            const otherY = (other.y - scrollOffset + height) % height;
-            const dx = p.x - other.x;
-            const dy = drawY - otherY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < connectionDistance) {
-              const opacity = (1 - distance / connectionDistance) * 0.16;
-
-              ctx.beginPath();
-              ctx.moveTo(p.x, drawY);
-              ctx.lineTo(other.x, otherY);
-              ctx.strokeStyle = `rgba(${particleColor}, ${opacity})`;
-              ctx.lineWidth = 0.7;
-              ctx.stroke();
-            }
           }
         }
-      }
 
-      function renderBackground(time) {
-        if (reducedMotion.matches) {
+        function renderBackground(time) {
+          if (reducedMotion.matches) {
+            ctx.clearRect(0, 0, width, height);
+            drawMouseGlow();
+            drawParticles();
+            return;
+          }
+
+          if (time - lastFrame < 15) {
+            animationFrame = requestAnimationFrame(renderBackground);
+            return;
+          }
+
+          lastFrame = time;
           ctx.clearRect(0, 0, width, height);
           drawMouseGlow();
-          drawParticles(time);
-          return;
-        }
+          drawParticles();
 
-        // Cap rendering to approximately 60 FPS.
-        if (time - lastFrame < 15) {
           animationFrame = requestAnimationFrame(renderBackground);
-          return;
         }
 
-        lastFrame = time;
-        ctx.clearRect(0, 0, width, height);
-        drawMouseGlow();
-        drawParticles(time);
+        function startAnimation() {
+          if (animationFrame !== null) {
+            cancelAnimationFrame(animationFrame);
+          }
 
-        animationFrame = requestAnimationFrame(renderBackground);
-      }
-
-      function startAnimation() {
-        if (animationFrame !== null) {
-          cancelAnimationFrame(animationFrame);
+          lastFrame = 0;
+          animationFrame = requestAnimationFrame(renderBackground);
         }
 
-        lastFrame = 0;
-        animationFrame = requestAnimationFrame(renderBackground);
-      }
+        window.addEventListener('pointermove', (event) => {
+          mouse.x = event.clientX;
+          mouse.y = event.clientY;
+          mouse.active = true;
+        }, { passive: true });
 
-      window.addEventListener('pointermove', (event) => {
-        mouse.x = event.clientX;
-        mouse.y = event.clientY;
-        mouse.active = true;
-      }, { passive: true });
+        window.addEventListener('pointerleave', () => {
+          mouse.active = false;
+        }, { passive: true });
 
-      window.addEventListener('pointerleave', () => {
-        mouse.active = false;
-      }, { passive: true });
+        window.addEventListener('blur', () => {
+          mouse.active = false;
+        });
 
-      window.addEventListener('blur', () => {
-        mouse.active = false;
-      });
+        window.addEventListener('scroll', () => {
+          scrollY = window.scrollY || 0;
+        }, { passive: true });
 
-      window.addEventListener('scroll', () => {
-        scrollY = window.scrollY || 0;
-      }, { passive: true });
+        window.addEventListener('resize', () => {
+          resizeCanvas();
+        }, { passive: true });
 
-      window.addEventListener('resize', () => {
+        if (reducedMotion.addEventListener) {
+          reducedMotion.addEventListener('change', startAnimation);
+        }
+
         resizeCanvas();
-      }, { passive: true });
-
-      if (reducedMotion.addEventListener) {
-        reducedMotion.addEventListener('change', startAnimation);
+        startAnimation();
       }
-
-      resizeCanvas();
-      startAnimation();
     }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeBackgroundEffects, { once: true });
+  } else {
+    initializeBackgroundEffects();
   }
 
   // =========================================================
@@ -582,6 +632,4 @@
       });
     });
   });
-
 })();
-
