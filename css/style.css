@@ -490,7 +490,7 @@ img, video {
   height: 100%;
   object-fit: cover;
   object-position: center 32%;
-  display: none;
+  display: block;
   filter: brightness(0.82) contrast(1.08);
   z-index: 1;
 }
