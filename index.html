@@ -1,1 +1,231 @@
-    <section class="hero-section" id="home" data-video-section="home" aria-label="Cinematic Introduction">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smooth Scroll Animation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: #222222 #000000;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #262626;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #404040;
+    }
+
+    /* Scroll track determining total scroll depth for the 240 frames */
+    #scroll-container {
+      height: 500vh;
+      position: relative;
+    }
+
+    /* Fixed full-screen canvas viewport */
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      background: #000000;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <div id="scroll-container"></div>
+  <div id="canvas-container">
+    <canvas id="animation-canvas"></canvas>
+  </div>
+
+  <script>
+    (function () {
+      const TOTAL_FRAMES = 240;
+      const canvas = document.getElementById('animation-canvas');
+      const ctx = canvas.getContext('2d', { alpha: false });
+
+      const frames = [];
+      const loaded = new Array(TOTAL_FRAMES + 1).fill(false);
+      let loadedCount = 0;
+
+      // Smooth interpolation state
+      let targetFrame = 1;
+      let currentFrame = 1;
+      let lastRenderedFrame = -1;
+      let isRendering = false;
+
+      // Damping factor for smooth interpolation (0.08 - 0.1 gives fluid, organic momentum)
+      const LERP_FACTOR = 0.085;
+
+      // Construct frame filename
+      function getFrameSrc(index) {
+        const padded = String(index).padStart(3, '0');
+        return `ezgif-frame-${padded}.jpg`;
+      }
+
+      // Preload all frames in memory
+      function preloadFrames() {
+        for (let i = 1; i <= TOTAL_FRAMES; i++) {
+          const img = new Image();
+          img.src = getFrameSrc(i);
+
+          img.onload = () => {
+            loaded[i] = true;
+            loadedCount++;
+
+            // Immediately display frame 1 as soon as it's ready
+            if (i === 1 && lastRenderedFrame === -1) {
+              renderFrame(1);
+            }
+          };
+
+          frames[i] = img;
+        }
+      }
+
+      // Find nearest loaded frame so canvas never flickers blank
+      function getNearestLoadedFrame(targetIndex) {
+        if (loaded[targetIndex] && frames[targetIndex]?.complete && frames[targetIndex]?.naturalWidth > 0) {
+          return frames[targetIndex];
+        }
+
+        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+          const prev = targetIndex - offset;
+          if (prev >= 1 && loaded[prev] && frames[prev]?.complete && frames[prev]?.naturalWidth > 0) {
+            return frames[prev];
+          }
+
+          const next = targetIndex + offset;
+          if (next <= TOTAL_FRAMES && loaded[next] && frames[next]?.complete && frames[next]?.naturalWidth > 0) {
+            return frames[next];
+          }
+        }
+
+        return frames[1];
+      }
+
+      // High-DPI canvas resizing
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+
+        canvas.style.width = `${w}px`;
+        canvas.style.height = `${h}px`;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
+        lastRenderedFrame = -1;
+        renderFrame(Math.round(currentFrame));
+      }
+
+      // Render frame onto canvas with aspect-ratio containment and centered alignment
+      function renderFrame(index) {
+        if (index === lastRenderedFrame) return;
+
+        const img = getNearestLoadedFrame(index);
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+
+        const cw = canvas.width;
+        const ch = canvas.height;
+        const iw = img.naturalWidth;
+        const ih = img.naturalHeight;
+
+        const scale = Math.min(cw / iw, ch / ih);
+        const nw = iw * scale;
+        const nh = ih * scale;
+        const x = (cw - nw) / 2;
+        const y = (ch - nh) / 2;
+
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, cw, ch);
+        ctx.drawImage(img, 0, 0, iw, ih, x, y, nw, nh);
+
+        lastRenderedFrame = index;
+      }
+
+      // Read scroll progress and map to target frame
+      function onScroll() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = maxScroll > 0 ? Math.min(Math.max(scrollTop / maxScroll, 0), 1) : 0;
+
+        targetFrame = 1 + progress * (TOTAL_FRAMES - 1);
+
+        if (!isRendering) {
+          isRendering = true;
+          requestAnimationFrame(animationLoop);
+        }
+      }
+
+      // Smooth animation loop using LERP
+      function animationLoop() {
+        const diff = targetFrame - currentFrame;
+
+        if (Math.abs(diff) > 0.005) {
+          currentFrame += diff * LERP_FACTOR;
+        } else {
+          currentFrame = targetFrame;
+        }
+
+        const frameToDraw = Math.round(currentFrame);
+        renderFrame(frameToDraw);
+
+        // Keep loop active while interpolating
+        if (Math.abs(targetFrame - currentFrame) > 0.005) {
+          requestAnimationFrame(animationLoop);
+        } else {
+          isRendering = false;
+        }
+      }
+
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+      });
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Initialize
+      preloadFrames();
+      resizeCanvas();
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
