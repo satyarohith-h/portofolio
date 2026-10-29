@@ -1,231 +1,710 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smooth Scroll Animation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Satya Rohith | Portfolio</title>
+  <meta name="description" content="Satya Rohith portfolio" />
+  <link rel="stylesheet" href="css/style.css" />
   <style>
-    * {
+    :root {
+      --bg: #060608;
+      --panel: rgba(16, 18, 24, 0.72);
+      --text: #f5f7fa;
+      --muted: #b7bec9;
+      --accent: #74d6ff;
+      --accent-2: #9f7bff;
+      --line: rgba(255,255,255,0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      background-color: #000000;
-      overflow-x: hidden;
-      scrollbar-width: thin;
-      scrollbar-color: #222222 #000000;
-    }
+    a { color: inherit; text-decoration: none; }
+    img, video, canvas { max-width: 100%; display: block; }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #000000;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #262626;
-      border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #404040;
-    }
-
-    /* Scroll track determining total scroll depth for the 240 frames */
-    #scroll-container {
-      height: 500vh;
-      position: relative;
-    }
-
-    /* Fixed full-screen canvas viewport */
-    #canvas-container {
+    .site-bg-canvas-wrap,
+    .site-bg-video-wrap {
       position: fixed;
       inset: 0;
-      width: 100vw;
-      height: 100vh;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .site-bg-video,
+    .site-bg-fallback,
+    #site-bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .site-bg-video {
+      display: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .site-bg-video.is-active {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .site-bg-fallback {
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+
+    .site-bg-fallback.fade-out {
+      opacity: 0;
+    }
+
+    .site-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(10, 12, 18, 0.35), rgba(6,6,8,0.78) 62%, rgba(6,6,8,0.95));
+      z-index: 2;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(10px);
+      background: rgba(9, 11, 14, 0.4);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-monogram {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .monogram-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #05111a;
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .brand-text {
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      border: 1px solid rgba(116,214,255,0.5);
+      border-radius: 999px;
+      padding: 0.75rem 1.1rem;
+      background: rgba(116,214,255,0.08);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    #main-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none;
-      background: #000000;
+      padding: 4rem 1.2rem 2rem;
+      overflow: hidden;
     }
 
-    canvas {
-      display: block;
+    .hero-hud {
+      width: min(1200px, 100%);
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero-hud-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hud-badge, .hud-frame-counter {
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(13, 16, 22, 0.48);
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero-hud-center {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-greeting {
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(2.8rem, 6vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .name-highlight {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      margin: 0.6rem 0 1rem;
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      color: #dfe8f6;
+    }
+
+    .tag-ai {
+      color: var(--accent);
+    }
+
+    .hero-description {
+      margin: 0 auto;
+      max-width: 700px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .hero-cta-group {
+      margin-top: 1.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 0.9rem 1.5rem;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #041018;
+      box-shadow: 0 10px 30px rgba(116,214,255,0.35);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+    }
+
+    .hero-quick-channels {
+      margin-top: 1.4rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .channel-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .channel-pill svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .hero-hud-bottom {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.4rem;
+    }
+
+    .scroll-indicator-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .scroll-mouse-icon {
+      width: 36px;
+      height: 58px;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 18px;
+      position: relative;
+    }
+
+    .scroll-wheel {
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      transform: translateX(-50%);
+      width: 7px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      animation: scroll 1.6s infinite ease-in-out;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(16px); opacity: 0.1; }
+    }
+
+    .section-container {
+      width: min(1200px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 5rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .section-tag {
+      display: inline-block;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      letter-spacing: -0.05em;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0.8rem auto 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .about-photo-wrapper {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      min-height: 440px;
+    }
+
+    .about-photo {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+    }
+
+    .about-photo-overlay {
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .about-badge-status {
+      background: rgba(8, 12, 18, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.7rem 1rem;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: #71f2a1;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(113,242,161,0.9);
+      display: inline-block;
+    }
+
+    .about-content {
+      color: var(--muted);
+    }
+
+    .about-lead-copy {
+      font-size: 1.08rem;
+      margin: 0 0 1.5rem;
+      color: #dfe8f6;
+    }
+
+    .about-highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .about-pill-card {
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .pill-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(116,214,255,0.08);
+      color: var(--accent);
+      margin-bottom: 0.7rem;
+    }
+
+    .about-pill-card h4 {
+      margin: 0 0 0.35rem;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .about-pill-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .section-divider {
+      border-top: 1px solid var(--line);
+      width: min(1200px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    #contact {
+      padding-bottom: 7rem;
+    }
+
+    .contact-card {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .contact-card h3 {
+      margin: 0 0 0.8rem;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+    }
+
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-quick-channels { gap: 0.6rem; }
+      .channel-pill { width: calc(50% - 0.45rem); justify-content: center; }
+      .about-highlights-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <div id="scroll-container"></div>
-  <div id="canvas-container">
-    <canvas id="animation-canvas"></canvas>
+  <div class="site-bg-canvas-wrap" aria-hidden="true">
+    <canvas id="site-bg-canvas"></canvas>
+    <video id="site-bg-video" class="site-bg-video" muted playsinline preload="auto" poster="assets/satya-portrait-1.jpg">
+      <source src="assets/hero-video.mp4" type="video/mp4" />
+    </video>
+    <img src="assets/satya-portrait-1.jpg" alt="Satya Rohith portrait" class="site-bg-fallback" id="site-bg-fallback" />
+    <div class="site-bg-overlay"></div>
   </div>
 
-  <script>
-    (function () {
-      const TOTAL_FRAMES = 240;
-      const canvas = document.getElementById('animation-canvas');
-      const ctx = canvas.getContext('2d', { alpha: false });
+  <header class="site-header" id="site-header">
+    <div class="nav-container">
+      <a href="#home" class="brand-monogram" aria-label="Satya Rohith Home">
+        <span class="monogram-badge">SR</span>
+        <span class="brand-text">Satya Rohith</span>
+      </a>
 
-      const frames = [];
-      const loaded = new Array(TOTAL_FRAMES + 1).fill(false);
-      let loadedCount = 0;
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
 
-      // Smooth interpolation state
-      let targetFrame = 1;
-      let currentFrame = 1;
-      let lastRenderedFrame = -1;
-      let isRendering = false;
+      <a href="#contact" class="nav-cta">Let’s Connect</a>
+    </div>
+  </header>
 
-      // Damping factor for smooth interpolation (0.08 - 0.1 gives fluid, organic momentum)
-      const LERP_FACTOR = 0.085;
+  <main id="main-content">
+    <section class="hero-section" id="home" data-video-section="home" aria-label="Cinematic Introduction">
+      <div class="hero-hud">
+        <div class="hero-hud-top">
+          <div class="hud-badge"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#71f2a1;box-shadow:0 0 10px rgba(113,242,161,0.9);margin-right:8px;vertical-align:middle;"></span>AI-POWERED DEVELOPER</div>
+          <div class="hud-frame-counter">PORTFOLIO 2026</div>
+        </div>
 
-      // Construct frame filename
-      function getFrameSrc(index) {
-        const padded = String(index).padStart(3, '0');
-        return `ezgif-frame-${padded}.jpg`;
-      }
+        <div class="hero-hud-center">
+          <div class="hero-greeting">Satya Rohith</div>
+          <h1 class="hero-title">Hi, I'm <span class="name-highlight">Satya Rohith</span></h1>
+          <h2 class="hero-subtitle"><span class="tag-ai">AI-Powered</span> Builder &amp; Developer</h2>
+          <p class="hero-description">I build web experiences and practical digital products while exploring artificial intelligence and machine learning.</p>
 
-      // Preload all frames in memory
-      function preloadFrames() {
-        for (let i = 1; i <= TOTAL_FRAMES; i++) {
-          const img = new Image();
-          img.src = getFrameSrc(i);
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn-primary">View Projects</a>
+            <a href="#contact" class="btn-secondary">Contact Me</a>
+          </div>
 
-          img.onload = () => {
-            loaded[i] = true;
-            loadedCount++;
+          <div class="hero-quick-channels" aria-label="Quick Contact Channels">
+            <a href="https://www.instagram.com/satya_____rohith/" target="_blank" rel="noreferrer" class="channel-pill">Instagram</a>
+            <a href="https://wa.me/918142279161?text=Hi%20Satya,%20saw%20your%20portfolio!" target="_blank" rel="noreferrer" class="channel-pill">WhatsApp</a>
+            <a href="mailto:satyarohith2005@gmail.com" class="channel-pill">Email</a>
+          </div>
+        </div>
 
-            // Immediately display frame 1 as soon as it's ready
-            if (i === 1 && lastRenderedFrame === -1) {
-              renderFrame(1);
-            }
-          };
+        <div class="hero-hud-bottom">
+          <a href="#about" class="scroll-indicator-wrap" aria-label="Explore Portfolio">
+            <div class="scroll-mouse-icon"><div class="scroll-wheel"></div></div>
+            <span>Explore Portfolio</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-          frames[i] = img;
-        }
-      }
+    <div class="section-divider"></div>
 
-      // Find nearest loaded frame so canvas never flickers blank
-      function getNearestLoadedFrame(targetIndex) {
-        if (loaded[targetIndex] && frames[targetIndex]?.complete && frames[targetIndex]?.naturalWidth > 0) {
-          return frames[targetIndex];
-        }
+    <section class="section-container" id="about">
+      <div class="section-header">
+        <span class="section-tag">// 01. About Me</span>
+        <h2 class="section-title">Crafting Code With Passion &amp; Curiosity</h2>
+        <p class="section-subtitle">A developer committed to practical solutions, continuous learning, and exploring intelligent systems.</p>
+      </div>
 
-        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
-          const prev = targetIndex - offset;
-          if (prev >= 1 && loaded[prev] && frames[prev]?.complete && frames[prev]?.naturalWidth > 0) {
-            return frames[prev];
-          }
+      <div class="about-grid">
+        <div class="about-visual-card">
+          <div class="about-photo-wrapper">
+            <img src="assets/satya-about-me.jpg" alt="Satya Rohith portfolio portrait" class="about-photo" />
+            <div class="about-photo-overlay">
+              <div class="about-badge-status"><span class="status-dot"></span><span>Available for Projects &amp; AI Builds</span></div>
+            </div>
+          </div>
+        </div>
 
-          const next = targetIndex + offset;
-          if (next <= TOTAL_FRAMES && loaded[next] && frames[next]?.complete && frames[next]?.naturalWidth > 0) {
-            return frames[next];
-          }
-        }
+        <div class="about-content">
+          <p class="about-lead-copy">I'm Satya Rohith, a developer interested in web development, artificial intelligence, and machine learning. I enjoy building practical applications, solving problems, learning new tools, and turning ideas into working digital experiences.</p>
 
-        return frames[1];
-      }
+          <div class="about-highlights-grid">
+            <div class="about-pill-card">
+              <div class="pill-icon">W</div>
+              <h4>Web Engineering</h4>
+              <p>Building clean, responsive interfaces with modern HTML, CSS, JavaScript, and Flask.</p>
+            </div>
+            <div class="about-pill-card">
+              <div class="pill-icon">AI</div>
+              <h4>AI &amp; ML</h4>
+              <p>Exploring machine learning models, intelligent workflow automation, and data logic.</p>
+            </div>
+            <div class="about-pill-card">
+              <div class="pill-icon">P</div>
+              <h4>Product Mindset</h4>
+              <p>Turning concepts into production-focused software that solves real user problems.</p>
+            </div>
+            <div class="about-pill-card">
+              <div class="pill-icon">C</div>
+              <h4>Collaborative Builder</h4>
+              <p>Working across teams, ideas, and code to build reliable, useful experiences.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      // High-DPI canvas resizing
-      function resizeCanvas() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const w = window.innerWidth;
-        const h = window.innerHeight;
+    <div class="section-divider"></div>
 
-        canvas.width = Math.round(w * dpr);
-        canvas.height = Math.round(h * dpr);
+    <section class="section-container" id="skills">
+      <div class="section-header">
+        <span class="section-tag">// 02. Technical Skills</span>
+        <h2 class="section-title">Technologies &amp; Tools</h2>
+        <p class="section-subtitle">Real technologies I actively work with, along with tools and areas I continue exploring.</p>
+      </div>
+      <div class="about-highlights-grid">
+        <div class="about-pill-card"><h4>Python</h4><p>Backend scripting, automation, AI foundations, and logic-heavy application work.</p></div>
+        <div class="about-pill-card"><h4>HTML</h4><p>Semantic structure, accessible layouts, and modern content architecture.</p></div>
+        <div class="about-pill-card"><h4>CSS</h4><p>Responsive design, layout systems, and motion-driven interfaces.</p></div>
+        <div class="about-pill-card"><h4>JavaScript</h4><p>DOM workflows, interactive UI logic, and animation systems.</p></div>
+        <div class="about-pill-card"><h4>Flask</h4><p>Fast backend prototyping and lightweight web application development.</p></div>
+        <div class="about-pill-card"><h4>Git &amp; GitHub</h4><p>Version control, collaboration, code review, and deployment workflows.</p></div>
+      </div>
+    </section>
 
-        canvas.style.width = `${w}px`;
-        canvas.style.height = `${h}px`;
+    <div class="section-divider"></div>
 
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
+    <section class="section-container" id="experience">
+      <div class="section-header">
+        <span class="section-tag">// 03. Experience</span>
+        <h2 class="section-title">Building Real Products</h2>
+        <p class="section-subtitle">I enjoy creating helpful tools and user-facing products that are practical, measurable, and layered with thoughtful engineering.</p>
+      </div>
+      <div class="contact-card">
+        <h3>Product-minded engineering</h3>
+        <p>I’ve worked on digital product ideas, AI-assisted workflows, and portfolio-focused interfaces with a focus on clarity, speed, and usability.</p>
+      </div>
+    </section>
 
-        lastRenderedFrame = -1;
-        renderFrame(Math.round(currentFrame));
-      }
+    <div class="section-divider"></div>
 
-      // Render frame onto canvas with aspect-ratio containment and centered alignment
-      function renderFrame(index) {
-        if (index === lastRenderedFrame) return;
+    <section class="section-container" id="projects">
+      <div class="section-header">
+        <span class="section-tag">// 04. Projects</span>
+        <h2 class="section-title">Selected Work</h2>
+        <p class="section-subtitle">From portfolio sites to AI-focused builds, I like shipping experiences that are both elegant and useful.</p>
+      </div>
+      <div class="about-highlights-grid">
+        <div class="about-pill-card"><h4>MediFlow</h4><p>Practical healthcare-oriented product design and workflow thinking.</p></div>
+        <div class="about-pill-card"><h4>Portfolio Experience</h4><p>Cinematic, scroll-driven front-end design with clean storytelling and motion.</p></div>
+        <div class="about-pill-card"><h4>AI Experiments</h4><p>Exploring intelligent interfaces, automations, and reasoning-driven builds.</p></div>
+        <div class="about-pill-card"><h4>Web Builds</h4><p>Responsive product pages, landing experiences, and practical UI implementations.</p></div>
+      </div>
+    </section>
 
-        const img = getNearestLoadedFrame(index);
-        if (!img || !img.complete || img.naturalWidth === 0) return;
+    <div class="section-divider"></div>
 
-        const cw = canvas.width;
-        const ch = canvas.height;
-        const iw = img.naturalWidth;
-        const ih = img.naturalHeight;
+    <section class="section-container" id="contact">
+      <div class="contact-card">
+        <span class="section-tag">// 05. Contact</span>
+        <h3>Let’s build something useful</h3>
+        <p>If you need a builder who enjoys product thinking, AI exploration, and polished front-end execution, let’s connect.</p>
+        <div class="contact-buttons">
+          <a href="mailto:satyarohith2005@gmail.com" class="btn-primary">Email Me</a>
+          <a href="https://wa.me/918142279161?text=Hi%20Satya,%20I%20saw%20your%20portfolio!" target="_blank" rel="noreferrer" class="btn-secondary">WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        const scale = Math.min(cw / iw, ch / ih);
-        const nw = iw * scale;
-        const nh = ih * scale;
-        const x = (cw - nw) / 2;
-        const y = (ch - nh) / 2;
-
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(0, 0, cw, ch);
-        ctx.drawImage(img, 0, 0, iw, ih, x, y, nw, nh);
-
-        lastRenderedFrame = index;
-      }
-
-      // Read scroll progress and map to target frame
-      function onScroll() {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = maxScroll > 0 ? Math.min(Math.max(scrollTop / maxScroll, 0), 1) : 0;
-
-        targetFrame = 1 + progress * (TOTAL_FRAMES - 1);
-
-        if (!isRendering) {
-          isRendering = true;
-          requestAnimationFrame(animationLoop);
-        }
-      }
-
-      // Smooth animation loop using LERP
-      function animationLoop() {
-        const diff = targetFrame - currentFrame;
-
-        if (Math.abs(diff) > 0.005) {
-          currentFrame += diff * LERP_FACTOR;
-        } else {
-          currentFrame = targetFrame;
-        }
-
-        const frameToDraw = Math.round(currentFrame);
-        renderFrame(frameToDraw);
-
-        // Keep loop active while interpolating
-        if (Math.abs(targetFrame - currentFrame) > 0.005) {
-          requestAnimationFrame(animationLoop);
-        } else {
-          isRendering = false;
-        }
-      }
-
-      window.addEventListener('resize', () => {
-        resizeCanvas();
-      });
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-
-      // Initialize
-      preloadFrames();
-      resizeCanvas();
-      onScroll();
-    })();
-  </script>
+  <script src="js/main.js"></script>
+  <script src="js/canvas-animation.js"></script>
 </body>
 </html>
