@@ -9,49 +9,90 @@
     bgVideo.muted = true;
     bgVideo.setAttribute('playsinline', 'true');
     bgVideo.setAttribute('autoplay', 'autoplay');
-    bgVideo.style.objectPosition = 'center 32%';
+    bgVideo.style.objectPosition = 'center 50%';
 
     if (bgFallback) {
-      bgFallback.style.display = 'block';
-      bgFallback.style.objectPosition = 'center 32%';
+      bgFallback.style.objectPosition = 'center 50%';
     }
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let videoTicking = false;
+    let pointerX = 0;
+    let pointerY = 0;
+    let frameId = null;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
 
     function updateBackgroundFraming() {
-      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-      const scrollProgress = prefersReducedMotion ? 0 : Math.min(Math.max((window.scrollY || 0) / maxScroll, 0), 1);
-      const focalY = 32 + (scrollProgress * 18);
+      const x = 50 + pointerX * 8;
+      const y = 50 + pointerY * 8;
+      const focalX = clamp(x, 20, 80);
+      const focalY = clamp(y, 20, 80);
+      const position = `${focalX}% ${focalY}%`;
 
-      bgVideo.style.objectPosition = `center ${focalY}%`;
+      bgVideo.style.objectPosition = position;
 
       if (bgFallback) {
-        bgFallback.style.objectPosition = `center ${focalY}%`;
+        bgFallback.style.objectPosition = position;
       }
     }
 
-    function scheduleBackgroundFraming() {
-      if (videoTicking) return;
+    function handlePointerMove(event) {
+      if (prefersReducedMotion) return;
+      pointerX = (event.clientX / window.innerWidth - 0.5) * 2;
+      pointerY = (event.clientY / window.innerHeight - 0.5) * 2;
 
-      videoTicking = true;
+      if (frameId) return;
 
-      requestAnimationFrame(() => {
+      frameId = requestAnimationFrame(() => {
         updateBackgroundFraming();
-        videoTicking = false;
+        frameId = null;
       });
     }
 
-    bgVideo.play().catch(() => {
+    function activateBackgroundVideo() {
+      bgVideo.classList.add('is-active');
       if (bgFallback) {
-        bgFallback.style.display = 'block';
+        bgFallback.classList.add('fade-out');
       }
-    });
-
-    if (!prefersReducedMotion) {
-      window.addEventListener('scroll', scheduleBackgroundFraming, { passive: true });
-      window.addEventListener('resize', scheduleBackgroundFraming, { passive: true });
+      bgVideo.play().catch(() => {
+        if (bgFallback) {
+          bgFallback.classList.remove('fade-out');
+        }
+      });
     }
 
-    scheduleBackgroundFraming();
+    function deactivateBackgroundVideo() {
+      bgVideo.pause();
+      bgVideo.classList.remove('is-active');
+      if (bgFallback) {
+        bgFallback.classList.remove('fade-out');
+      }
+    }
+
+    const videoSection = document.querySelector('[data-video-section="home"]') || document.getElementById('home');
+
+    if (videoSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activateBackgroundVideo();
+          } else {
+            deactivateBackgroundVideo();
+          }
+        });
+      }, {
+        threshold: 0.45,
+      });
+
+      observer.observe(videoSection);
+    }
+
+    if (!prefersReducedMotion) {
+      window.addEventListener('pointermove', handlePointerMove, { passive: true });
+      window.addEventListener('resize', updateBackgroundFraming, { passive: true });
+    }
+
+    updateBackgroundFraming();
   }
